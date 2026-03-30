@@ -1,0 +1,22 @@
+{
+  "name": "beacon-relay",
+  "version": "1.0.0",
+  "description": "Relay server for Beacon watch party rooms",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "ws": "^8.18.2"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/node": "^22.0.0",
+    "@types/ws": "^8.5.14",
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3"
+  }
+}
