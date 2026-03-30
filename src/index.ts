@@ -17,6 +17,10 @@ const PORT = Number(process.env.PORT ?? 4242)
 // ─── HTTP + WS server ─────────────────────────────────────────────────────────
 
 const app = express()
+app.use((_req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  next()
+})
 const server = createServer(app)
 const wss = new WebSocketServer({ server })
 
