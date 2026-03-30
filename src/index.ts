@@ -155,7 +155,7 @@ wss.on('connection', (ws) => {
 
 app.get('/room/:roomId/hls/:path(*)', async (req, res) => {
   const roomId = req.params['roomId']
-  const path = req.params['path(*)']
+  const path = (req.params as Record<string, string>)['path']
   const room = getRoom(roomId)
   if (!room) return res.status(404).send('Room not found')
 
