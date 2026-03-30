@@ -154,7 +154,8 @@ wss.on('connection', (ws) => {
 // ─── HLS proxy ────────────────────────────────────────────────────────────────
 
 app.get('/room/:roomId/hls/:path(*)', async (req, res) => {
-  const { roomId, path } = req.params
+  const roomId = req.params['roomId']
+  const path = req.params['path(*)']
   const room = getRoom(roomId)
   if (!room) return res.status(404).send('Room not found')
 
@@ -190,7 +191,7 @@ app.get('/room/:roomId/hls/:path(*)', async (req, res) => {
 
 // Rooms list (for debug / future UI)
 app.get('/rooms', (_req, res) => {
-  const list = []
+  const list: unknown[] = []
   // rooms is private — expose via a helper if needed
   res.json(list)
 })
