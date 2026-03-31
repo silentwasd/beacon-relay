@@ -28,6 +28,7 @@ export type ClientMessage =
   | { type: 'leave-room' }
   | { type: 'sync'; action: 'play' | 'pause' | 'seek'; position: number; ts: number }
   | { type: 'hls-response'; requestId: string; data: string | null } // base64 segment data
+  | { type: 'viewer-state'; position: number; isPaused: boolean; segmentsLoaded: number; segmentsTotal: number }
 
 // ─── Server → Client messages ─────────────────────────────────────────────────
 
@@ -40,3 +41,4 @@ export type ServerMessage =
   | { type: 'host-left' }
   | { type: 'sync'; action: 'play' | 'pause' | 'seek'; position: number; ts: number }
   | { type: 'hls-request'; requestId: string; path: string }
+  | { type: 'viewer-state'; userId: string; position: number; isPaused: boolean; segmentsLoaded: number; segmentsTotal: number }

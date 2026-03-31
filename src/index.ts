@@ -132,6 +132,20 @@ wss.on('connection', (ws) => {
         pending.resolve(data)
         break
       }
+
+      case 'viewer-state': {
+        const room = getRoomBySocket(socketId)
+        if (!room || room.hostSocketId === socketId) return
+        sendToSocket(room.hostSocketId, {
+          type: 'viewer-state',
+          userId: socketId,
+          position: msg.position,
+          isPaused: msg.isPaused,
+          segmentsLoaded: msg.segmentsLoaded,
+          segmentsTotal: msg.segmentsTotal
+        })
+        break
+      }
     }
   })
 
