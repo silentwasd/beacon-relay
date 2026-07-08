@@ -26,6 +26,7 @@ export type ClientMessage =
   | { type: 'create-room'; profile: UserProfile; videoInfo: VideoInfo }
   | { type: 'join-room'; roomId: string; profile: UserProfile }
   | { type: 'leave-room' }
+  | { type: 'change-video'; videoInfo: VideoInfo }
   | { type: 'sync'; action: 'play' | 'pause' | 'seek'; position: number; ts: number }
   | { type: 'hls-response'; requestId: string; data: string | null } // base64 segment data
   | { type: 'viewer-state'; position: number; isPaused: boolean; segmentsLoaded: number; segmentsTotal: number }
@@ -39,6 +40,7 @@ export type ServerMessage =
   | { type: 'user-joined'; userId: string; profile: UserProfile }
   | { type: 'user-left'; userId: string }
   | { type: 'host-left' }
+  | { type: 'video-changed'; videoInfo: VideoInfo; playerState: PlayerState }
   | { type: 'sync'; action: 'play' | 'pause' | 'seek'; position: number; ts: number }
   | { type: 'hls-request'; requestId: string; path: string }
   | { type: 'viewer-state'; userId: string; position: number; isPaused: boolean; segmentsLoaded: number; segmentsTotal: number }

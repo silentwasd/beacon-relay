@@ -8,7 +8,8 @@ import {
   leaveRoom,
   getRoom,
   getRoomBySocket,
-  updatePlayerState
+  updatePlayerState,
+  changeVideo
 } from './rooms.js'
 import type { ClientMessage, ServerMessage } from './types.js'
 
@@ -109,6 +110,22 @@ wss.on('connection', (ws) => {
           broadcast(allIds, { type: 'user-left', userId: socketId })
           console.log(`[room] user left ${room.id}`)
         }
+        break
+      }
+
+      case 'change-video': {
+        const room = getRoomBySocket(socketId)
+        if (!room || room.hostSocketId !== socketId) return
+        const updated = changeVideo(room.id, msg.videoInfo)
+        if (!updated) return
+        // Notify host + all viewers so everyone reloads the new video
+        const allIds = [updated.hostSocketId, ...updated.users.keys()]
+        broadcast(allIds, {
+          type: 'video-changed',
+          videoInfo: updated.videoInfo,
+          playerState: updated.playerState
+        })
+        console.log(`[room] ${room.id} video changed to ${msg.videoInfo.name}`)
         break
       }
 

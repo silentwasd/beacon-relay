@@ -92,6 +92,15 @@ export function updatePlayerState(
   Object.assign(room.playerState, state, { updatedAt: Date.now() })
 }
 
+/** Replace the room's video and reset playback to the start (paused). */
+export function changeVideo(roomId: string, videoInfo: VideoInfo): Room | undefined {
+  const room = rooms.get(roomId)
+  if (!room) return undefined
+  room.videoInfo = videoInfo
+  room.playerState = { position: 0, isPaused: true, updatedAt: Date.now() }
+  return room
+}
+
 export function usersInRoom(room: Room): WebSocket[] {
   // This is used externally — we return socketIds, the caller maps to ws
   return []
